@@ -16,5 +16,5 @@ def lazy_paginate(page_size):
         pages = paginate_users(page_size, offset)
         if not pages:
             break
-        offset += page_size
         yield pages
+        offset += page_size

@@ -3,7 +3,7 @@ import functools
 with_db_connection = __import__("1-with_db_connection").with_db_connection
 
 def transactional(func):
-    functools.wraps(func)
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
             conn = args[0]

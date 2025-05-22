@@ -21,4 +21,4 @@ def get_user_by_id(conn, user_id):
     return cursor.fetchone()
 
 user = get_user_by_id(user_id="2496a00c-3911-45bb-9ebf-d41e57948a8f")
-print(user)
+# print(user)

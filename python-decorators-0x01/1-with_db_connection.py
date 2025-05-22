@@ -5,7 +5,7 @@ def with_db_connection(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            conn = sqlite3.connect("users.db")
+            conn = sqlite3.connect("../python-context-async-perations-0x02/users.db")
             result = func(conn, *args, **kwargs)
             return result
         finally:

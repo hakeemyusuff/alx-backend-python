@@ -11,7 +11,7 @@ def log_queries(func):
 
 @log_queries
 def fetch_all_users(query):
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect("../python-context-async-perations-0x02/users.db")
     cursor = conn.cursor()
     cursor.execute(query)
     results = cursor.fetchall()

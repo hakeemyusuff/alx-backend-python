@@ -40,7 +40,11 @@ def access_nested_map(nested_map: Mapping, path: Sequence) -> Any:
 
     return nested_map
 
-# nested_map={"a": 1}
-# path=("a", "b")
 
-# print(access_nested_map(nested_map, path))
+def get_json(url: str) -> Dict:
+    """Get JSON from remote URL.
+    """
+    response = requests.get(url)
+    return response.json()
+
+# print(get_json("https://jsonplaceholder.typicode.com/todos/1"))

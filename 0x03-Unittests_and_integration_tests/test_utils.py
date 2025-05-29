@@ -90,16 +90,18 @@ class TestGetJson(unittest.TestCase):
     class TestMemoize(unittest.TestCase):
         """Test case for the `memoize` decorator.
 
-        This test ensures that the `memoize` decorator correctly caches the result
-        of a method decorated as a property, such that the original method is only
-        called once, even if accessed multiple times.
+        This test ensures that the `memoize` decorator correctly caches the
+        result of a method decorated as a property, such that the original
+        method is only called once, even if accessed multiple times.
         """
 
         def test_memoize(self):
-            """Test that `memoize` caches the result and avoids repeated method calls.
+            """Test that `memoize` caches the result and avoids repeated
+            method calls.
 
             Defines a class with a memoized property that wraps a method.
-            The method is mocked to return a fixed value. This test confirms that:
+            The method is mocked to return a fixed value. This test confirms
+            that:
             - the result returned by the memoized property is as expected.
             - the underlying method is only called once, even when the property
               is accessed multiple times.

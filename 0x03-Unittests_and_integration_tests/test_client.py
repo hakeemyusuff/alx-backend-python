@@ -42,6 +42,9 @@ class TestGithubOrgClient(unittest.TestCase):
             result = obj._public_repos_url
 
             self.assertEqual(result, payload["repos_url"])
+    
+    def test_public_repos(self):
+        """A method to test the public_repos method"""
 
 
 if __name__ == "__main__":

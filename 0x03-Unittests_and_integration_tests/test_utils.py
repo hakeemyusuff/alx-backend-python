@@ -9,6 +9,7 @@ from unittest.mock import patch, Mock
 utils = __import__("utils")
 access_nested_map = utils.access_nested_map
 get_json = utils.get_json
+memoize = utils.memoize
 
 nested_map = {"a": {"b": {"c": 1}}}
 
@@ -85,6 +86,46 @@ class TestGetJson(unittest.TestCase):
         mock_get.return_value = mock_response
         result = get_json(url)
         self.assertEqual(result, mock_data)
+
+    class TestMemoize(unittest.TestCase):
+        """Test case for the `memoize` decorator.
+
+        This test ensures that the `memoize` decorator correctly caches the result
+        of a method decorated as a property, such that the original method is only
+        called once, even if accessed multiple times.
+        """
+
+        def test_memoize(self):
+            """Test that `memoize` caches the result and avoids repeated method calls.
+
+            Defines a class with a memoized property that wraps a method.
+            The method is mocked to return a fixed value. This test confirms that:
+            - the result returned by the memoized property is as expected.
+            - the underlying method is only called once, even when the property
+              is accessed multiple times.
+            """
+
+            class TestClass:
+                def a_method(self):
+                    return 42
+
+                @memoize
+                def a_property(self):
+                    return self.a_method()
+
+            with patch.object(
+                TestClass,
+                "a_method",
+                return_value=45,
+            ) as mock_method:
+                test_class = TestClass()
+
+                result1 = test_class.a_property
+                result2 = test_class.a_property
+
+                self.assertEqual(result1, 45)
+                self.assertEqual(result2, 45)
+                mock_method.assert_called_once()
 
 
 if __name__ == "__main__":

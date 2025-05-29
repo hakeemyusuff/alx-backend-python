@@ -47,4 +47,40 @@ def get_json(url: str) -> Dict:
     response = requests.get(url)
     return response.json()
 
-# print(get_json("https://jsonplaceholder.typicode.com/todos/1"))
+
+def memoize(fn: Callable) -> Callable:
+    """Decorator to memoize a method
+    Example
+    -------
+    class MyClass:
+        @memoize
+        def a_method(self):
+            print("a method called")
+            return 42
+    >>> my_object = MyClass()
+    >>> my_object.a_method
+    a method called
+    42
+    >>> my_object.a_method
+    42
+    """
+    
+    attr_name = "_{}".format(fn.__name__)
+    
+    @wraps(fn)
+    def memoized(self):
+        """memooized wraps"""
+        if not hasattr(self, attr_name):
+            setattr(self, attr_name, fn(self))
+        return getattr(self, attr_name)
+    
+    return property(memoized)
+
+class TestClass:
+    def a_method(self):
+        return 42
+    
+    @memoize
+    def a_property(self):
+        return self.a_method()
+

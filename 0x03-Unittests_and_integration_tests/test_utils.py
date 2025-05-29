@@ -105,7 +105,7 @@ class TestMemoize(unittest.TestCase):
         that:
         - the result returned by the memoized property is as expected.
         - the underlying method is only called once, even when the property
-        is accessed multiple times.
+        is accessed multiple times.`
         """
 
         class TestClass:

@@ -118,15 +118,12 @@ class TestGetJson(unittest.TestCase):
             with patch.object(
                 TestClass,
                 "a_method",
-                return_value=45,
+                return_value=42,
             ) as mock_method:
                 test_class = TestClass()
 
-                result1 = test_class.a_property
-                result2 = test_class.a_property
-
-                self.assertEqual(result1, 45)
-                self.assertEqual(result2, 45)
+                self.assertEqual(test_class.a_property, 42)
+                self.assertEqual(test_class.a_property, 42)
                 mock_method.assert_called_once()
 
 

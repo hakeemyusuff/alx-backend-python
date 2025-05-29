@@ -87,6 +87,7 @@ class TestGetJson(unittest.TestCase):
         result = get_json(url)
         self.assertEqual(result, mock_data)
 
+
 class TestMemoize(unittest.TestCase):
     """Test case for the `memoize` decorator.
 

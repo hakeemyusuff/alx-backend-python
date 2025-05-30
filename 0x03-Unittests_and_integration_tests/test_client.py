@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Test file to test client.py"""
 
+from typing import Any
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock, PropertyMock
@@ -44,7 +45,7 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(result, payload["repos_url"])
 
     @patch("client.get_json")
-    def test_public_repos(self, mock_get):
+    def test_public_repos(self, mock_get: Mock) -> Any:
         """A method to test the public_repos method"""
 
         repos = [

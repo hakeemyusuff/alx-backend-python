@@ -1,6 +1,8 @@
 from rest_framework import viewsets
 from .models import User, Conversation, Message
 from .serializers import UserSerializer, ConversationSerializer, MessageSerializer
+from rest_framework import status
+from rest_framework import filters
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

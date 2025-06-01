@@ -132,5 +132,53 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         )
 
 
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integration test class for GithubOrgClient"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up class-wide mocks before all tests"""
+        org_payload = {"repos_url": "https://api.github.com/orgs/google/repos"}
+        repos_payload = [
+            {"name": "repo1", "license": {"key": "apache-2.0"}},
+            {"name": "repo2", "license": {"key": "mit"}},
+        ]
+
+        cls.org_payload = org_payload
+        cls.repos_payload = repos_payload
+
+        # Patch get_json used in the client
+        cls.get_patcher = patch("client.get_json")
+        cls.mock_get_json = cls.get_patcher.start()
+
+        # 👇 This is the line you were missing or needed to expand
+        cls.mock_get_json.side_effect = [
+            cls.org_payload,
+            cls.repos_payload,
+            cls.org_payload,
+            cls.repos_payload,
+        ]  # covers both test_public_repos and test_public_repos_with_license
+
+    @classmethod
+    def tearDownClass(cls) -> Any:
+        """Stop patcher after all tests"""
+        cls.get_patcher.stop()
+
+    def test_public_repos(self) -> Any:
+        """Test that public_repos returns the correct list of repo names"""
+        github_client = client.GithubOrgClient("google")
+        expected = ["repo1", "repo2"]
+        self.assertEqual(github_client.public_repos(), expected)
+
+    def test_public_repos_with_license(self) -> Any:
+        """Test that public_repos filters repos by license"""
+        github_client = client.GithubOrgClient("google")
+        expected = ["repo1"]  # Only repo1 has apache-2.0 license
+        self.assertEqual(
+            github_client.public_repos(license="apache-2.0"),
+            expected,
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

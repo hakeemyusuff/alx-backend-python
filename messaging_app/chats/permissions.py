@@ -1,7 +1,7 @@
-from rest_framework.permissions import BasePermission
+from rest_framework import permissions
 from .models import Message, Conversation
 
-class IsSenderOrReceiver(BasePermission):
+class IsSenderOrReceiver(permissions.BasePermission):
     """Allows access only to users who are sender or receiver of a message.
     """
     
@@ -9,7 +9,7 @@ class IsSenderOrReceiver(BasePermission):
         return obj.sender == request.user or obj.receiver == request.user
     
 
-class IsParcticipant(BasePermission):
+class IsParcticipant(permissions.BasePermission):
     """Allows access to only participants that is part of the conversation.
     """
     

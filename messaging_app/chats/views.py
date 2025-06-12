@@ -1,10 +1,12 @@
 from rest_framework import viewsets,status, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from .models import User, Conversation, Message
 from .serializers import UserSerializer, ConversationSerializer, MessageSerializer
 from .permissions import IsParticipantOfConversation
+from .filters import MessageFilter
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,6 +20,8 @@ class ConversationViewSet(viewsets.ModelViewSet):
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, IsParticipantOfConversation]
+    filter_backends = DjangoFilterBackend
+    filterset_class = MessageFilter
     
     def get_queryset(self):
         conversation_id = self.kwargs.get("conversation_id")

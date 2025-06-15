@@ -21,8 +21,8 @@ def send_message(request, receiver_id):
         parent_message = Message.objects.filter(id=parent_id).first() if parent_id else None
 
         Message.objects.create(
-            sender = request.user,
-            receiver= receiver,
+            sender=request.user,
+            receiver=receiver,
             content=content,
             parent_message=parent_message,
         )

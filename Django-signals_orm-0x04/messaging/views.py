@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Message
 from django.contrib.auth import get_user_model
+from django.views.decorators.cache import cache_page
 
 User = get_user_model()
 
@@ -44,7 +45,7 @@ def get_threaded_replies(message):
         replies.extend(get_threaded_replies(reply))
     return replies
 
-
+@cache_page(60)
 @login_required
 def view_thread(request, message_id):
     message = get_object_or_404(

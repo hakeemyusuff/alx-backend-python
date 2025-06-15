@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     # local
     "chats.apps.ChatsConfig",
+    "messaging.apps.MessagingConfig",
 ]
 
 MIDDLEWARE = [
